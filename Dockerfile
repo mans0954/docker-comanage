@@ -1,15 +1,15 @@
 FROM debian
 MAINTAINER christopher.hoskin@gmail.com
 
-RUN apt-get update && apt-get install -y php5 apache2 wget unzip php5-pgsql
-#RUN wget https://github.com/Internet2/comanage-registry/archive/develop.zip && \
-# unzip develop.zip && \
-# mv comanage-registry-develop /var/www/html/registry && \
-# rm develop.zip
-RUN wget https://github.com/Internet2/comanage-registry/archive/1.0.5.tar.gz && \
- tar xzf 1.0.5.tar.gz && \
- mv comanage-registry-1.0.5 /srv/comanage && \
- rm 1.0.5.tar.gz
+RUN apt-get update && apt-get install -y php5 apache2 wget unzip php5-pgsql postgresql-client
+RUN wget https://github.com/Internet2/comanage-registry/archive/develop.zip && \
+ unzip develop.zip && \
+ mv comanage-registry-develop /srv/comanage && \
+ rm develop.zip
+#RUN wget https://github.com/Internet2/comanage-registry/archive/1.0.5.tar.gz && \
+# tar xzf 1.0.5.tar.gz && \
+# mv comanage-registry-1.0.5 /srv/comanage && \
+# rm 1.0.5.tar.gz
 RUN ln -s /srv/comanage/app/webroot /var/www/html/registry
 ADD comanage.conf /etc/apache2/sites-available/
 RUN a2dissite 000-default
@@ -24,11 +24,12 @@ RUN ln -s /var/cache/registry /srv/comanage/local/tmp
 
 ADD database.php /srv/comanage/local/Config/database.php
 
-ADD start.sh /
-RUN chmod a+x /start.sh
+ADD start.sh /srv/comanage/local/
+RUN chmod a+x /srv/comanage/local/start.sh
+
+# Don't do this in production...
+RUN htpasswd -b -c /srv/comanage/local/passwd admin tamesis
 
 EXPOSE 80
-EXPOSE 443
-#USER www-data
-CMD /start.sh
+CMD /srv/comanage/local/start.sh
 
