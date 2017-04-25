@@ -1,5 +1,12 @@
 #!/bin/bash
 
+until PGPASSWORD=comanage psql -h postgres -U comanage -c '\l'; do
+  >&2 echo "Postgres is unavailable - sleeping"
+  sleep 1
+done
+
+>&2 echo "Postgres is up - initialising"
+
 NUMTABLES=`PGPASSWORD=comanage psql comanage -t -c "SELECT count(*) FROM pg_catalog.pg_tables where tableowner='comanage';" -h postgres -U comanage`
 echo "$NUMTABLES tables"
 

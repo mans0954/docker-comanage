@@ -1,0 +1,14 @@
+version: '3'
+services:
+  comanage:
+    build: .
+    links:
+    - postgres:postgres
+  postgres:
+    image: postgres
+    container_name: comanage-postgres
+    environment:
+      - POSTGRES_USER=comanage
+      - POSTGRES_PASSWORD=comanage
+      - POSTGRES_DB=comanage
+  
