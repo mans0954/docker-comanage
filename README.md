@@ -33,7 +33,7 @@ docker-compose stop
 
 Start postgres:
 
-docker run -d --name postgres-comanage -e POSTGRES_USER=comanage -e POSTGRES_PASSWORD=comanage -e POSTGRES_DB=comanage postgres
+docker run -d --name postgres-comanage -v comanage-data:/var/lib/postgresql/data -e POSTGRES_USER=comanage -e POSTGRES_PASSWORD=comanage -e POSTGRES_DB=comanage postgres
 
 Check that the database is up:
 

@@ -2,13 +2,21 @@ version: '3'
 services:
   comanage:
     build: .
+    container_name: comanage
+    domainname: docker
     links:
     - postgres:postgres
   postgres:
     image: postgres
     container_name: comanage-postgres
+    domainname: docker
     environment:
       - POSTGRES_USER=comanage
       - POSTGRES_PASSWORD=comanage
       - POSTGRES_DB=comanage
+    volumes:
+      - comanage-data:/var/lib/postgresql/data
+
+volumes:
+  comanage-data: {}
   
