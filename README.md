@@ -41,9 +41,13 @@ docker logs postgres-comanage
 
 Start comanage:
 
-docker run -ti --link postgres-comanage:postgres mans0954/comanage
+docker run -ti --link postgres-comanage:postgres --name comanage mans0954/comanage
 
-Browse to http://172.17.0.3/registry (your IP address may be different)
+If you are using nss docker (on Linux hosts) you should then be able to browse to:
+
+http://comanage.docker/registry
+
+Otherwise browse to http://172.17.0.3/registry (your IP address may be different)
 
 Login, through basic auth, with username 'admin' and password 'tamesis'.
 
