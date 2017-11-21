@@ -1,11 +1,23 @@
 FROM debian
 MAINTAINER christopher.hoskin@gmail.com
 
-RUN apt-get update && apt-get install -y php5 apache2 wget unzip php5-pgsql postgresql-client
-RUN wget https://github.com/Internet2/comanage-registry/archive/develop.zip && \
- unzip develop.zip && \
- mv comanage-registry-develop /srv/comanage && \
- rm develop.zip
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y php7.0 php7.0-xsl php7.0-pgsql php7.0-ldap php7.0-gd apache2 wget unzip  postgresql-client
+#RUN wget https://github.com/Internet2/comanage-registry/archive/develop.zip && \
+# unzip develop.zip && \
+# mv comanage-registry-develop /srv/comanage && \
+# rm develop.zip
+#RUN wget https://github.com/Internet2/comanage-registry/archive/master.zip && \
+# unzip master.zip && \
+# mv comanage-registry-master /srv/comanage && \
+# rm master.zip
+RUN wget https://github.com/Internet2/comanage-registry/archive/3.0.0.tar.gz && \
+ tar xf 3.0.0.tar.gz && \
+ mv comanage-registry-3.0.0 /srv/comanage && \
+ rm 3.0.0.tar.gz
+
+
 #RUN wget https://github.com/Internet2/comanage-registry/archive/1.0.5.tar.gz && \
 # tar xzf 1.0.5.tar.gz && \
 # mv comanage-registry-1.0.5 /srv/comanage && \
