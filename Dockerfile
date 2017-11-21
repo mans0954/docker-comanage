@@ -8,14 +8,14 @@ RUN apt-get update && apt-get install -y php7.0 php7.0-xsl php7.0-pgsql php7.0-l
 # unzip develop.zip && \
 # mv comanage-registry-develop /srv/comanage && \
 # rm develop.zip
-#RUN wget https://github.com/Internet2/comanage-registry/archive/master.zip && \
-# unzip master.zip && \
-# mv comanage-registry-master /srv/comanage && \
-# rm master.zip
-RUN wget https://github.com/Internet2/comanage-registry/archive/3.0.0.tar.gz && \
- tar xf 3.0.0.tar.gz && \
- mv comanage-registry-3.0.0 /srv/comanage && \
- rm 3.0.0.tar.gz
+RUN wget https://github.com/Internet2/comanage-registry/archive/master.zip && \
+ unzip master.zip && \
+ mv comanage-registry-master /srv/comanage && \
+ rm master.zip
+#RUN wget https://github.com/Internet2/comanage-registry/archive/3.0.0.tar.gz && \
+# tar xf 3.0.0.tar.gz && \
+# mv comanage-registry-3.0.0 /srv/comanage && \
+# rm 3.0.0.tar.gz
 
 
 #RUN wget https://github.com/Internet2/comanage-registry/archive/1.0.5.tar.gz && \
@@ -41,6 +41,9 @@ RUN chmod a+x /srv/comanage/local/start.sh
 
 # Don't do this in production...
 RUN htpasswd -b -c /srv/comanage/local/passwd admin tamesis
+
+RUN ln -s /srv/comanage/app/AvailablePlugin/FileSource /srv/comanage/local/Plugin/FileSource
+RUN ln -s /srv/comanage/app/AvailablePlugin/LdapSource /srv/comanage/local/Plugin/LdapSource
 
 EXPOSE 80
 CMD /srv/comanage/local/start.sh
