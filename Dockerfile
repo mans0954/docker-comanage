@@ -35,6 +35,7 @@ RUN chmod 700 /var/cache/registry
 RUN ln -s /var/cache/registry /srv/comanage/local/tmp
 
 ADD database.php /srv/comanage/local/Config/database.php
+ADD email.php /srv/comanage/local/Config/email.php
 
 ADD start.sh /srv/comanage/local/
 RUN chmod a+x /srv/comanage/local/start.sh
