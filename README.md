@@ -16,6 +16,10 @@ The container requires a separate container to provide a Postgresql database. Th
 
 This demo container is not yet set up to work with SAML. Basic Auth is used instead. An administrator account is created with username 'admin' and password 'tamesis' on first run.
 
+# Prerequisites
+
+* docker-compose
+* nssdocker
 
 # Use
 
