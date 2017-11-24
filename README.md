@@ -28,30 +28,15 @@ This demo container is not yet set up to work with SAML. Basic Auth is used inst
 ```
 docker-compose build
 docker-compose up
-docker-compose ls
+```
+
+Go to http://comanage.docker/registry . When redirected to Shibboleth, authenticate as user `user1` with password `password1`.
+
+Stop:
+
+```
 docker-compose stop
 ```
 
 
-## Manual
-
-Start postgres:
-
-docker run -d --name postgres-comanage -v comanage-data:/var/lib/postgresql/data -e POSTGRES_USER=comanage -e POSTGRES_PASSWORD=comanage -e POSTGRES_DB=comanage postgres
-
-Check that the database is up:
-
-docker logs postgres-comanage
-
-Start comanage:
-
-docker run -ti --link postgres-comanage:postgres --name comanage mans0954/comanage
-
-If you are using nss docker (on Linux hosts) you should then be able to browse to:
-
-http://comanage.docker/registry
-
-Otherwise browse to http://172.17.0.3/registry (your IP address may be different)
-
-Login, through basic auth, with username 'admin' and password 'tamesis'.
 
