@@ -19,5 +19,8 @@ if [[ $NUMTABLES -eq 0 ]]; then
 	popd;
 fi
 
+# Start Shibd
+/etc/init.d/shibd start
+
 env -i LANG=C PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin apache2ctl -D FOREGROUND
 

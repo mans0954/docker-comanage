@@ -1,11 +1,14 @@
-version: '3'
+version: '3.1'
 services:
   comanage:
     build: .
     container_name: comanage
     domainname: docker
-    links:
-    - postgres:postgres
+    volumes:
+      - metadata:/etc/shibboleth/metadata
+    networks:
+      - example
+
   postgres:
     image: postgres
     container_name: comanage-postgres
@@ -16,7 +19,39 @@ services:
       - POSTGRES_DB=comanage
     volumes:
       - comanage-data:/var/lib/postgresql/data
+    networks:
+      - example
+
+  bar-idp:
+    build: bar-idp/
+    volumes:
+      - metadata:/opt/shibboleth-idp/metadata/
+      - /sys/fs/cgroup:/host/sys/fs/cgroup:ro
+    container_name: bar-idp
+    stop_signal: RTMIN+3
+    environment:
+      - container=docker
+    tmpfs:
+      - /run
+      - /tmp
+    cap_add:
+      - SYS_ADMIN
+    expose:
+      - "8080"
+      - "8443"
+    networks:
+      - example
+
+  bar-kdc:
+    build: bar-kdc/
+    container_name: bar-kdc
+    networks:
+      - example
 
 volumes:
   comanage-data: {}
-  
+  metadata:
+
+networks:
+  example:
+

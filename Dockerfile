@@ -3,7 +3,7 @@ MAINTAINER christopher.hoskin@gmail.com
 
 ARG DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update && apt-get install -y php7.0 php7.0-xsl php7.0-pgsql php7.0-ldap php7.0-gd apache2 wget unzip  postgresql-client
+RUN apt-get update && apt-get install -y php7.0 php7.0-xsl php7.0-pgsql php7.0-ldap php7.0-gd apache2 wget unzip  postgresql-client libapache2-mod-shib2
 #RUN wget https://github.com/Internet2/comanage-registry/archive/develop.zip && \
 # unzip develop.zip && \
 # mv comanage-registry-develop /srv/comanage && \
@@ -27,6 +27,7 @@ ADD comanage.conf /etc/apache2/sites-available/
 RUN a2dissite 000-default
 RUN a2ensite comanage
 RUN a2enmod rewrite
+RUN a2enmod shib2
 
 #
 RUN cp -r /srv/comanage/app/tmp.dist /var/cache/registry
@@ -45,6 +46,8 @@ RUN htpasswd -b -c /srv/comanage/local/passwd admin tamesis
 
 RUN ln -s /srv/comanage/app/AvailablePlugin/FileSource /srv/comanage/local/Plugin/FileSource
 RUN ln -s /srv/comanage/app/AvailablePlugin/LdapSource /srv/comanage/local/Plugin/LdapSource
+
+COPY shibboleth2.xml /etc/shibboleth/shibboleth2.xml
 
 EXPOSE 80
 CMD /srv/comanage/local/start.sh
