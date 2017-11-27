@@ -11,6 +11,7 @@ RUN mkdir /var/log/kerberos
 COPY krb5.conf /etc/krb5.conf
 RUN kdb5_util -P password -r BAR.AC.UK create -s
 
+RUN kadmin.local -q "add_principal -pw tamesis admin@BAR.AC.UK"
 RUN kadmin.local -q "add_principal -pw password1 user1@BAR.AC.UK"
 
 EXPOSE 88

@@ -15,7 +15,7 @@ if [[ $NUMTABLES -eq 0 ]]; then
 	echo "Initialising Database";
 	pushd /srv/comanage/app/;
 	su -s "/bin/bash" -c "./Console/cake database" www-data;
-	./Console/cake setup --admin-given-name=Alfred --admin-family-name=Wessex --admin-username=admin --enable-pooling=no;
+	./Console/cake setup --admin-given-name=Alfred --admin-family-name=Wessex --admin-username=admin@bar.ac.uk --enable-pooling=no;
 	popd;
 fi
 

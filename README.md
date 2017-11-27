@@ -14,7 +14,28 @@ THIS CONTAINER IS PURELY FOR DEMONSTRATION PURPOSES ON YOUR LOCALHOST. IT IS NOT
 
 The container requires a separate container to provide a Postgresql database. The name of the database, the role and the password are all 'comanage'.
 
-This demo container is not yet set up to work with SAML. Basic Auth is used instead. An administrator account is created with username 'admin' and password 'tamesis' on first run.
+# Components
+
+The demo consists of the following containers:
+
+* comanage: COmanage container (SAML entity id http://comanage.docker/shibboleth)
+* comanage-postgres: PostgreSQL container
+* bar-idp: Shibboleth IdP v3 container for the fictitious University of Barsetshire (entity id `http://bar-idp.bar.ac.uk:8080/idp/shibboleth`)
+* bar-kdc: MIT Kerberos v5 KDC container for the fictitious University of Barsetshire (realm BAR.AC.UK)
+
+The following networks:
+
+* example
+
+And the following volumes:
+
+* dockercomanage_comanage-data: Allows the PostgeSQL database to persist between runs
+* dockercomanage_metadata: Allows the generated IdP metadata to be shared with the COmanage container
+
+The following accounts are generated:
+
+* administrator account with username `admin@bar.ac.uk` and password `tamesis`
+* user account with username `user1@bar.ac.uk` and password `password1`.
 
 # Prerequisites
 

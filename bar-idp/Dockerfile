@@ -64,7 +64,7 @@ ADD ./configs /build-configs
 RUN export JAVA_HOME=/usr/java/latest ; \
     export KEYPASS=changeit ; \
     export SEALPASS=changeit ; \
-    export SCOPE=docker ; \
+    export SCOPE=bar.ac.uk ; \
     export HOST=bar-idp.$SCOPE ; \
     export ENTITYID=http://$HOST:8080/idp/shibboleth ;  \
     cd /usr/local/dist ;  \
@@ -120,7 +120,7 @@ VOLUME [ "/sys/fs/cgroup" ]
 
 RUN systemctl enable tomcat.service
 
-RUN sed -i 's/https:\/\/bar-idp.docker\//http:\/\/bar-idp.docker:8080\//' /opt/shibboleth-idp/metadata/idp-metadata.xml
+RUN sed -i 's/https:\/\/bar-idp.bar.ac.uk\//http:\/\/bar-idp.docker:8080\//' /opt/shibboleth-idp/metadata/idp-metadata.xml
 
 COPY relying-party.xml /opt/shibboleth-idp/conf/relying-party.xml
 COPY password-authn-config.xml /opt/shibboleth-idp/conf/authn/password-authn-config.xml

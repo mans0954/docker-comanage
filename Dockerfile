@@ -42,7 +42,7 @@ ADD start.sh /srv/comanage/local/
 RUN chmod a+x /srv/comanage/local/start.sh
 
 # Don't do this in production...
-RUN htpasswd -b -c /srv/comanage/local/passwd admin tamesis
+RUN htpasswd -b -c /srv/comanage/local/passwd admin@bar.ac.uk tamesis
 
 RUN ln -s /srv/comanage/app/AvailablePlugin/FileSource /srv/comanage/local/Plugin/FileSource
 RUN ln -s /srv/comanage/app/AvailablePlugin/LdapSource /srv/comanage/local/Plugin/LdapSource
