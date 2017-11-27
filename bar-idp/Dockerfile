@@ -76,6 +76,10 @@ RUN export JAVA_HOME=/usr/java/latest ; \
     echo idp.entityID=$ENTITYID>>$SFILE ; \
     echo idp.sealer.storePassword=$SEALPASS>>$SFILE ; \
     echo idp.sealer.keyPassword=$SEALPASS>>$SFILE ; \
+    echo idp.session.trackSPSessions=true>>$SFILE ; \
+    echo idp.session.secondaryServiceIndex=true>>$SFILE ; \
+    echo idp.storage.htmlLocalStorage=true>>$SFILE ; \
+    echo idp.logout.authenticated = false>>$SFILE ; \
     $DIST/bin/install.sh \
        -Didp.property.file=idp.install.properties \
        -Didp.merge.properties=idp.merge.properties \
@@ -121,6 +125,8 @@ VOLUME [ "/sys/fs/cgroup" ]
 RUN systemctl enable tomcat.service
 
 RUN sed -i 's/https:\/\/bar-idp.bar.ac.uk\//http:\/\/bar-idp.docker:8080\//' /opt/shibboleth-idp/metadata/idp-metadata.xml
+RUN sed -i '/<!--/ {N;s/\s<SingleLogoutService/--><SingleLogoutService/}' /opt/shibboleth-idp/metadata/idp-metadata.xml
+RUN sed -i '/\s<SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" Location="https:\/\/bar-idp.bar.ac.uk:8443\/idp\/profile\/SAML2\/SOAP\/SLO"\/>/ {N;s/-->//}' /opt/shibboleth-idp/metadata/idp-metadata.xml
 
 COPY relying-party.xml /opt/shibboleth-idp/conf/relying-party.xml
 COPY password-authn-config.xml /opt/shibboleth-idp/conf/authn/password-authn-config.xml
