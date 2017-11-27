@@ -18,14 +18,14 @@ The container requires a separate container to provide a Postgresql database. Th
 
 The demo consists of the following containers:
 
-* comanage: COmanage container (SAML entity id http://comanage.docker/shibboleth)
-* comanage-postgres: PostgreSQL container
-* bar-idp: Shibboleth IdP v3 container for the fictitious University of Barsetshire (entity id `http://bar-idp.bar.ac.uk:8080/idp/shibboleth`)
-* bar-kdc: MIT Kerberos v5 KDC container for the fictitious University of Barsetshire (realm BAR.AC.UK)
+* comanage: COmanage container (SAML entity id `http://comanage.docker/shibboleth`)
+* comanage-postgres: PostgreSQL container, based on the official image https://hub.docker.com/_/postgres/
+* bar-idp: Shibboleth IdP v3 container for the fictitious University of Barsetshire (SAML entity id `http://bar-idp.bar.ac.uk:8080/idp/shibboleth`)
+* bar-kdc: MIT Kerberos v5 KDC container for the fictitious University of Barsetshire (Kerberos realm BAR.AC.UK)
 
 The following networks:
 
-* example
+* example: With nssdocker installed, all container hostnames will be accessible from the host as `<containername>.docker`
 
 And the following volumes:
 
