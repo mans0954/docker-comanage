@@ -5,7 +5,8 @@ services:
     container_name: comanage
     domainname: docker
     volumes:
-      - metadata:/etc/shibboleth/metadata
+      - bar-metadata:/etc/shibboleth/bar-metadata
+      - cm-metadata:/etc/shibboleth/cm-metadata
     networks:
       - example
 
@@ -25,7 +26,7 @@ services:
   bar-idp:
     build: bar-idp/
     volumes:
-      - metadata:/opt/shibboleth-idp/metadata/
+      - bar-metadata:/opt/shibboleth-idp/metadata/
       - /sys/fs/cgroup:/host/sys/fs/cgroup:ro
     container_name: bar-idp
     stop_signal: RTMIN+3
@@ -48,9 +49,37 @@ services:
     networks:
       - example
 
+  cm-idp:
+    build: cm-idp/
+    volumes:
+      - cm-metadata:/opt/shibboleth-idp/metadata/
+      - /sys/fs/cgroup:/host/sys/fs/cgroup:ro
+    container_name: cm-idp
+    stop_signal: RTMIN+3
+    environment:
+      - container=docker
+    tmpfs:
+      - /run
+      - /tmp
+    cap_add:
+      - SYS_ADMIN
+    expose:
+      - "8080"
+      - "8443"
+    networks:
+      - example
+
+  cm-kdc:
+    build: cm-kdc/
+    container_name: cm-kdc
+    networks:
+      - example
+
+
 volumes:
   comanage-data: {}
-  metadata:
+  bar-metadata:
+  cm-metadata:
 
 networks:
   example:
