@@ -124,9 +124,16 @@ VOLUME [ "/sys/fs/cgroup" ]
 
 RUN systemctl enable tomcat.service
 
+#It's getting to the point where it would be better to generate the metadata file ourselves...
 RUN sed -i 's/https:\/\/bar-idp.bar.ac.uk\//http:\/\/bar-idp.docker:8080\//' /opt/shibboleth-idp/metadata/idp-metadata.xml
 RUN sed -i '/<!--/ {N;s/\s<SingleLogoutService/--><SingleLogoutService/}' /opt/shibboleth-idp/metadata/idp-metadata.xml
 RUN sed -i '/\s<SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" Location="https:\/\/bar-idp.bar.ac.uk:8443\/idp\/profile\/SAML2\/SOAP\/SLO"\/>/ {N;s/-->//}' /opt/shibboleth-idp/metadata/idp-metadata.xml
+RUN sed -i 's/<mdui:DisplayName xml:lang="en">A Name for the IdP at bar-idp.bar.ac.uk<\/mdui:DisplayName>/<mdui:DisplayName xml:lang="en">University of Barsetshire<\/mdui:DisplayName>/' /opt/shibboleth-idp/metadata/idp-metadata.xml
+RUN sed -i 's/<mdui:Description xml:lang="en">Enter a description of your IdP at bar-idp.bar.ac.uk<\/mdui:Description>/<mdui:Description xml:lang="en">Test IdP for the fictitious University of Barsetshire<\/mdui:Description>/' /opt/shibboleth-idp/metadata/idp-metadata.xml
+RUN sed -i 's/<mdui:Logo height="80" width="80">http:\/\/bar-idp.docker:8080\/Path\/To\/Logo.png<\/mdui:Logo>/<mdui:Logo height="80" width="80">http:\/\/bar-idp.docker:8080\/root\/images\/Barsetshire.png<\/mdui:Logo>/' /opt/shibboleth-idp/metadata/idp-metadata.xml
+RUN sed -i '/<!--/ {N;s/\sFill in the details for your IdP here/-->/}' /opt/shibboleth-idp/metadata/idp-metadata.xml
+RUN sed -i '/\s<\/mdui:UIInfo>/ {N;s/-->//}' /opt/shibboleth-idp/metadata/idp-metadata.xml
+
 
 COPY relying-party.xml /opt/shibboleth-idp/conf/relying-party.xml
 COPY password-authn-config.xml /opt/shibboleth-idp/conf/authn/password-authn-config.xml

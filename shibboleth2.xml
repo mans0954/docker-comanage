@@ -42,7 +42,7 @@
             (Set discoveryProtocol to "WAYF" for legacy Shibboleth WAYF support.)
             You can also override entityID on /Login query string, or in RequestMap/htaccess.
             -->
-            <SSO discoveryProtocol="SAMLDS" discoveryURL="http://comanage.docker/"> SAML2 SAML1 </SSO>
+            <SSO discoveryProtocol="SAMLDS" discoveryURL="http://comanage.docker/registry/pages/eds/index"> SAML2 SAML1 </SSO>
 
 
             <!-- SAML and local-only logout. -->

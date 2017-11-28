@@ -55,7 +55,7 @@ RUN tar xf shibboleth-embedded-ds-1.2.0.tar.gz
 RUN cp shibboleth-embedded-ds-1.2.0/idpselect_config.js /var/www/html/
 RUN cp shibboleth-embedded-ds-1.2.0/idpselect.js /var/www/html/
 RUN cp shibboleth-embedded-ds-1.2.0/idpselect.css /var/www/html/
-RUN cp shibboleth-embedded-ds-1.2.0/index.html /var/www/html/
+#RUN cp shibboleth-embedded-ds-1.2.0/index.html /var/www/html/
 
 
 EXPOSE 80
