@@ -138,8 +138,8 @@ RUN echo idp.title="University of Barsetshire Web Login Service">>/opt/shibbolet
     echo idp.logo.alt-text="University of Barsetshire">>/opt/shibboleth-idp/messages/messages.properties ; \
     echo idp.footer="Gardez Gresham">>/opt/shibboleth-idp/messages/messages.properties
 
-COPY Barsetshire.png /opt/shibboleth-idp/webapp/images/Barsetshire.png
-RUN chown root:tomcat /opt/shibboleth-idp/webapp/images/Barsetshire.png
+COPY Barsetshire.png /var/lib/tomcat/webapps/idp/images/Barsetshire.png
+RUN chown -R tomcat:tomcat /var/lib/tomcat/webapps/idp
 
 EXPOSE 8080
 CMD ["/usr/sbin/init"]
