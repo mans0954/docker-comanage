@@ -58,6 +58,11 @@ Stop:
 ```
 docker-compose stop
 ```
+# Caveats
 
+In order to complete this demo environment in the minimum time possible, a number of shortcuts have been taken, which make it totally unsuited to production. A non-exhaustive list is:
+
+* Unsigned logout assertions accepted
+* Not all downloads verified
 
 

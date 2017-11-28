@@ -42,7 +42,7 @@
             (Set discoveryProtocol to "WAYF" for legacy Shibboleth WAYF support.)
             You can also override entityID on /Login query string, or in RequestMap/htaccess.
             -->
-            <SSO   entityID="http://bar-idp.bar.ac.uk:8080/idp/shibboleth"> SAML2 SAML1 </SSO>
+            <SSO discoveryProtocol="SAMLDS" discoveryURL="http://comanage.docker/"> SAML2 SAML1 </SSO>
 
 
             <!-- SAML and local-only logout. -->
@@ -88,7 +88,7 @@
         <MetadataProvider type="XML" validate="true" file="partner-metadata.xml"/>
         -->
 
-        <MetadataProvider type="XML" validate="false" file="metadata/idp-metadata.xml"/>
+        <MetadataProvider type="XML" validate="false" file="metadata/idp-metadata.xml" legacyOrgNames="true"/>
 
         <!-- Map to extract attributes from SAML assertions. -->
         <AttributeExtractor type="XML" validate="true" reloadChanges="false" path="attribute-map.xml"/>

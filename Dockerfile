@@ -49,6 +49,15 @@ RUN ln -s /srv/comanage/app/AvailablePlugin/LdapSource /srv/comanage/local/Plugi
 
 COPY shibboleth2.xml /etc/shibboleth/shibboleth2.xml
 
+RUN wget https://shibboleth.net/downloads/embedded-discovery-service/latest/shibboleth-embedded-ds-1.2.0.tar.gz
+
+RUN tar xf shibboleth-embedded-ds-1.2.0.tar.gz
+RUN cp shibboleth-embedded-ds-1.2.0/idpselect_config.js /var/www/html/
+RUN cp shibboleth-embedded-ds-1.2.0/idpselect.js /var/www/html/
+RUN cp shibboleth-embedded-ds-1.2.0/idpselect.css /var/www/html/
+RUN cp shibboleth-embedded-ds-1.2.0/index.html /var/www/html/
+
+
 EXPOSE 80
 CMD /srv/comanage/local/start.sh
 
