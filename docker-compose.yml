@@ -23,6 +23,20 @@ services:
     networks:
       - example
 
+  raptor-mua:
+    build: raptor-mua/
+    container_name: raptor-mua
+    volumes:
+      - raptor-mua:/opt/raptor/mua
+      - raptor-web:/opt/raptor/web
+
+  raptor-web:
+    build: raptor-web/
+    container_name: raptor-web
+    volumes:
+      - raptor-web:/opt/raptor/web
+      - raptor-mua:/opt/raptor/mua
+
   bar-idp:
     build: bar-idp/
     volumes:
@@ -80,6 +94,8 @@ volumes:
   comanage-data: {}
   bar-metadata:
   cm-metadata:
+  raptor-web:
+  raptor-mua:
 
 networks:
   example:
