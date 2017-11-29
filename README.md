@@ -62,7 +62,13 @@ docker-compose stop
 
 In order to complete this demo environment in the minimum time possible, a number of shortcuts have been taken, which make it totally unsuited to production. A non-exhaustive list is:
 
-* Unsigned logout assertions accepted
+* Unsigned logout assertions accepted by IdPs
 * Not all downloads verified
+* Used http rather than https endpoints for SAML
+* Allowed the IdPs to respond to unverified relying parties
+* Used weak default passwords in files/commands in plain text
+* Not using a service principal for communication between the IdP and the KDC
+* Using cookieProps="http" rather than cookieProps="https"
+
 
 
