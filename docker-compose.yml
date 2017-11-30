@@ -29,6 +29,7 @@ services:
     volumes:
       - raptor-mua:/opt/raptor/mua
       - raptor-web:/opt/raptor/web
+      - bar-ica:/opt/raptor/bar-ica
 
   raptor-web:
     build: raptor-web/
@@ -42,6 +43,7 @@ services:
     volumes:
       - bar-metadata:/opt/shibboleth-idp/metadata/
       - /sys/fs/cgroup:/host/sys/fs/cgroup:ro
+      - bar-logs:/opt/shibboleth-idp/logs/
     container_name: bar-idp
     stop_signal: RTMIN+3
     environment:
@@ -62,6 +64,16 @@ services:
     container_name: bar-kdc
     networks:
       - example
+
+  bar-ica:
+    build: bar-ica/
+    container_name: bar-ica
+    networks:
+      - example
+    volumes:
+      - bar-ica:/opt/raptor/ica
+      - bar-logs:/opt/shibboleth-idp/logs/
+      - raptor-mua:/opt/raptor/mua
 
   cm-idp:
     build: cm-idp/
@@ -96,6 +108,8 @@ volumes:
   cm-metadata:
   raptor-web:
   raptor-mua:
+  bar-ica:
+  bar-logs:
 
 networks:
   example:

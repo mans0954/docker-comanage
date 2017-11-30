@@ -147,5 +147,9 @@ RUN echo idp.title="University of Christminster Web Login Service">>/opt/shibbol
 COPY Christminster.png /var/lib/tomcat/webapps/root/images/Christminster.png
 RUN chown -R tomcat:tomcat /var/lib/tomcat/webapps/root
 
+#RUN curl http://download.opensuse.org/repositories/home:/rhyssmith:/raptor/CentOS_CentOS-6/home:rhyssmith:raptor.repo -o /etc/yum.repos.d/raptor.repo
+#RUN yum install -y --skip-broken raptor-ica
+
+
 EXPOSE 8080
 CMD ["/usr/sbin/init"]
