@@ -1,6 +1,8 @@
 FROM debian
 MAINTAINER christopher.hoskin@gmail.com
 
+RUN sed -i 's/deb.debian.org/mirror.ox.ac.uk/' /etc/apt/sources.list
+
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && apt-get install -y php7.0 php7.0-xsl php7.0-pgsql php7.0-ldap php7.0-gd apache2 wget unzip  postgresql-client libapache2-mod-shib2
@@ -8,14 +10,18 @@ RUN apt-get update && apt-get install -y php7.0 php7.0-xsl php7.0-pgsql php7.0-l
 # unzip develop.zip && \
 # mv comanage-registry-develop /srv/comanage && \
 # rm develop.zip
-RUN wget https://github.com/Internet2/comanage-registry/archive/master.zip && \
- unzip master.zip && \
- mv comanage-registry-master /srv/comanage && \
- rm master.zip
+#RUN wget https://github.com/Internet2/comanage-registry/archive/master.zip && \
+# unzip master.zip && \
+# mv comanage-registry-master /srv/comanage && \
+# rm master.zip
 #RUN wget https://github.com/Internet2/comanage-registry/archive/3.0.0.tar.gz && \
 # tar xf 3.0.0.tar.gz && \
 # mv comanage-registry-3.0.0 /srv/comanage && \
 # rm 3.0.0.tar.gz
+RUN wget https://github.com/Internet2/comanage-registry/archive/3.1.0-rc1.tar.gz && \
+ tar xf 3.1.0-rc1.tar.gz && \
+ mv comanage-registry-3.1.0-rc1 /srv/comanage && \
+ rm 3.1.0-rc1.tar.gz
 
 
 #RUN wget https://github.com/Internet2/comanage-registry/archive/1.0.5.tar.gz && \
