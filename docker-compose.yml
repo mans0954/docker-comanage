@@ -7,6 +7,7 @@ services:
     volumes:
       - bar-metadata:/etc/shibboleth/bar-metadata
       - cm-metadata:/etc/shibboleth/cm-metadata
+      - ./data:/data
     networks:
       - example
 
