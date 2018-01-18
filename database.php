@@ -1,6 +1,8 @@
 <?php
 class DATABASE_CONFIG {
 
+	public $default = array();
+/*
 	public $default = array(
 		'datasource' => 'Database/Postgres',
 		'persistent' => false,
@@ -11,6 +13,7 @@ class DATABASE_CONFIG {
 		'prefix' => 'cm_',
 		//'encoding' => 'utf8',
 	);
+*/
 
 	public $test = array(
 		'datasource' => 'Database/Postgres',
@@ -22,5 +25,8 @@ class DATABASE_CONFIG {
 		'prefix' => 'cm_',
 		//'encoding' => 'utf8',
 	);
+	function __construct() {
+		$this->default = yaml_parse_file('/etc/comanage/database.yaml');
+	}
 }
 ?>

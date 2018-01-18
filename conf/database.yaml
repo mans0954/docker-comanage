@@ -1,0 +1,8 @@
+datasource: 'Database/Postgres'
+persistent: false
+host:       'postgres'
+login:      'comanage'
+password:   'comanage'
+database:   'comanage'
+prefix:     'cm_'
+

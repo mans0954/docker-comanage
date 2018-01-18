@@ -42,12 +42,15 @@
  */
 class EmailConfig {
 
-	public $default = array(
+	public $default = array();
+
+/*	public $default = array(
 		'transport' => 'Mail',
 		'from' => 'comanage@docker',
 		//'charset' => 'utf-8',
 		//'headerCharset' => 'utf-8',
 	);
+*/
 
 	public $smtp = array(
 		'transport' => 'Smtp',
@@ -93,5 +96,9 @@ class EmailConfig {
 		//'charset' => 'utf-8',
 		//'headerCharset' => 'utf-8',
 	);
+
+	function __construct() {
+		$this->default = yaml_parse_file('/etc/comanage/email.yaml');
+	}
 
 }

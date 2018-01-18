@@ -48,7 +48,7 @@ The following accounts are generated:
 
 ```
 docker-compose build
-docker-compose up
+DB_PASSWORD=comanage docker-compose up
 ```
 
 Go to http://comanage.docker/registry . When redirected to Shibboleth, authenticate as user `user1` with password `password1`.

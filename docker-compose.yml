@@ -8,6 +8,15 @@ services:
       - bar-metadata:/etc/shibboleth/bar-metadata
       - cm-metadata:/etc/shibboleth/cm-metadata
       - ./data:/data
+      - ./conf:/etc/comanage
+    environment:
+      - DB_PASSWORD
+      - DB_HOST=postgres
+      - DB_USER=comanage
+      - DB_NAME=comanage
+      - ADMIN_GIVEN_NAME=Alfred
+      - ADMIN_FAMILY_NAME=Wessex
+      - ADMIN_USERNAME=admin@bar.ac.uk
     networks:
       - example
 
