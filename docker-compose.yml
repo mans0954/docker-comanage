@@ -37,7 +37,6 @@ services:
     build: bar-idp/
     volumes:
       - bar-metadata:/opt/shibboleth-idp/metadata/
-      - /sys/fs/cgroup:/host/sys/fs/cgroup:ro
     container_name: bar-idp
     expose:
       - "8080"
@@ -55,7 +54,6 @@ services:
     build: cm-idp/
     volumes:
       - cm-metadata:/opt/shibboleth-idp/metadata/
-      - /sys/fs/cgroup:/host/sys/fs/cgroup:ro
     container_name: cm-idp
     expose:
       - "8080"
