@@ -1,4 +1,4 @@
-FROM   centos:7
+FROM   tomcat
 MAINTAINER Christopher Hoskin "christopher.hoskin@gmail.com"
 # Based on https://github.com/Internet2/tier-idp/
 # Original Copyright and License unknown
@@ -7,34 +7,10 @@ MAINTAINER Christopher Hoskin "christopher.hoskin@gmail.com"
 
 USER root
 
-RUN yum -y update &&  \
-    yum -y install \
-             wget \
-             unzip; \
-    yum clean all
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y wget unzip
 
 RUN cd /opt
-
-################## start OpenJDK ###################### 
-#
-RUN yum -y update &&  \
-    yum -y install \ 
-             java-1.8.0-openjdk.x86_64  \
-             java-1.8.0-openjdk-devel.x86_64 ;  \
-    mkdir /usr/java ; \
-    ln -s /etc/alternatives/java_sdk_1.8.0_openjdk /usr/java/jdk1.8.0_77 ; \
-    ln -s /usr/java/jdk1.8.0_77 /usr/java/latest ; \
-    yum clean all
-#
-################## end OpenJDK ################## 
-
-#
-# tomcat
-#
-RUN yum -y update &&  \
-    yum -y install \
-             tomcat ; \
-    yum clean all
 
 #
 # Shibboleth IDP
@@ -51,17 +27,12 @@ RUN set -e ; \
     gpg shibboleth-identity-provider-3.3.1.tar.gz.asc ; \
     tar -xvzf shibboleth-identity-provider-3.3.1.tar.gz
 
-RUN yum -y update &&  \
-    yum -y install \
-             openssl ; \
-    yum clean all
-
 ADD ./configs /build-configs
 
 #
 # Install shibboleth IDP
 #
-RUN export JAVA_HOME=/usr/java/latest ; \
+RUN export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64 ; \
     export KEYPASS=changeit ; \
     export SEALPASS=changeit ; \
     export SCOPE=cm.ac.uk ; \
@@ -92,7 +63,7 @@ RUN export JAVA_HOME=/usr/java/latest ; \
        -Didp.noprompt=true 
 
 RUN IDP_HOME=/opt/shibboleth-idp ; \
-    chgrp -R tomcat $IDP_HOME ; \
+    chgrp -R root $IDP_HOME ; \
     chmod -R g+r $IDP_HOME ; \
     chmod g+w $IDP_HOME/logs ; \
     chmod g+s $IDP_HOME/logs
@@ -106,23 +77,9 @@ RUN wget https://build.shibboleth.net/nexus/service/local/repositories/thirdpart
 #
 # Deploy to Tomcat
 #
-RUN cp /build-configs/idp.xml /etc/tomcat/Catalina/localhost/
+RUN mkdir -p /usr/local/tomcat/conf/Catalina/localhost/
+RUN cp /build-configs/idp.xml /usr/local/tomcat/conf/Catalina/localhost/
 
-#
-# things we need assuming we end up running systemd
-#
-ENV container docker
-RUN (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
-rm -f /lib/systemd/system/multi-user.target.wants/*;\
-rm -f /etc/systemd/system/*.wants/*;\
-rm -f /lib/systemd/system/local-fs.target.wants/*; \
-rm -f /lib/systemd/system/sockets.target.wants/*udev*; \
-rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \
-rm -f /lib/systemd/system/basic.target.wants/*;\
-rm -f /lib/systemd/system/anaconda.target.wants/*;
-VOLUME [ "/sys/fs/cgroup" ]
-
-RUN systemctl enable tomcat.service
 
 RUN sed -i 's/https:\/\/cm-idp.cm.ac.uk\//http:\/\/cm-idp.docker:8080\//' /opt/shibboleth-idp/metadata/idp-metadata.xml
 RUN sed -i '/<!--/ {N;s/\s<SingleLogoutService/--><SingleLogoutService/}' /opt/shibboleth-idp/metadata/idp-metadata.xml
@@ -144,8 +101,9 @@ RUN echo idp.title="University of Christminster Web Login Service">>/opt/shibbol
     echo idp.logo.alt-text="University of Christminster">>/opt/shibboleth-idp/messages/messages.properties ; \
     echo idp.footer="Who knows?">>/opt/shibboleth-idp/messages/messages.properties
 
-COPY Christminster.png /var/lib/tomcat/webapps/root/images/Christminster.png
-RUN chown -R tomcat:tomcat /var/lib/tomcat/webapps/root
+RUN mkdir -p /usr/local/tomcat/webapps/ROOT/root/images
+COPY Christminster.png /usr/local/tomcat/webapps/ROOT/root/images/Christminster.png
+#RUN chown -R tomcat:tomcat /var/lib/tomcat/webapps/root
 
 EXPOSE 8080
-CMD ["/usr/sbin/init"]
+

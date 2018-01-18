@@ -39,14 +39,6 @@ services:
       - bar-metadata:/opt/shibboleth-idp/metadata/
       - /sys/fs/cgroup:/host/sys/fs/cgroup:ro
     container_name: bar-idp
-    stop_signal: RTMIN+3
-    environment:
-      - container=docker
-    tmpfs:
-      - /run
-      - /tmp
-    cap_add:
-      - SYS_ADMIN
     expose:
       - "8080"
       - "8443"
@@ -65,14 +57,6 @@ services:
       - cm-metadata:/opt/shibboleth-idp/metadata/
       - /sys/fs/cgroup:/host/sys/fs/cgroup:ro
     container_name: cm-idp
-    stop_signal: RTMIN+3
-    environment:
-      - container=docker
-    tmpfs:
-      - /run
-      - /tmp
-    cap_add:
-      - SYS_ADMIN
     expose:
       - "8080"
       - "8443"
