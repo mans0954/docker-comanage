@@ -1,0 +1,3 @@
+[submodule "nami/files"]
+	path = nami/files
+	url = https://github.com/Internet2/comanage-registry.git

@@ -1,0 +1,14 @@
+{
+  "id": "net.cshoskin.comanage",
+  "name": "net.cshoskin.comanage",
+  "extends": ["Component"],
+  "revision": 0,
+  "author": {"name": "Christopher Hoskin"},
+  "version": "1.0.0",
+  "properties": {
+  },
+  "exports": {
+  },
+  "installation": {
+  }
+}

@@ -1,4 +1,4 @@
-FROM debian
+FROM bitnami/minideb-extras:stretch
 
 #RUN sed -i 's/deb.debian.org/mirror.ox.ac.uk/' /etc/apt/sources.list
 
@@ -7,12 +7,16 @@ ARG DEBIAN_FRONTEND=noninteractive
 # for certbot
 RUN echo "deb http://ftp.debian.org/debian stretch-backports main" > /etc/apt/sources.list.d/backports.list
 
-RUN apt-get update && apt-get install -y php7.0 php7.0-xsl php7.0-pgsql php7.0-ldap php7.0-gd apache2 wget postgresql-client libapache2-mod-shib2 php-yaml certbot 
-ENV comanage_version 3.1.0-rc1
-RUN wget https://github.com/Internet2/comanage-registry/archive/${comanage_version}.tar.gz && \
- tar xf ${comanage_version}.tar.gz && \
- mv comanage-registry-${comanage_version} /srv/comanage && \
- rm ${comanage_version}.tar.gz
+RUN apt-get update && apt-get install -y php7.0 php7.0-xsl php7.0-pgsql php7.0-ldap php7.0-gd  apache2 wget postgresql-client libapache2-mod-shib2 php-yaml certbot 
+#ENV comanage_version 3.1.0-rc2
+#RUN wget https://github.com/Internet2/comanage-registry/archive/${comanage_version}.tar.gz && \
+# tar xf ${comanage_version}.tar.gz && \
+# mv comanage-registry-${comanage_version} /srv/comanage && \
+# rm ${comanage_version}.tar.gz
+
+ADD nami nami
+RUN nami install ./nami/
+RUN ln -s /opt/bitnami/net.cshoskin.comanage /srv/comanage
 
 RUN ln -s /srv/comanage/app/webroot /var/www/html/registry
 ADD comanage.conf /etc/apache2/sites-available/
