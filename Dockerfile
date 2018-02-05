@@ -14,6 +14,7 @@ RUN apt-get update && apt-get install -y php7.0 php7.0-xsl php7.0-pgsql php7.0-l
 # mv comanage-registry-${comanage_version} /srv/comanage && \
 # rm ${comanage_version}.tar.gz
 
+ADD comanage-inputs.json comanage-inputs.json
 ADD nami nami
 RUN nami install ./nami/
 RUN ln -s /opt/bitnami/net.cshoskin.comanage /srv/comanage

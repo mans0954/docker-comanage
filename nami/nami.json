@@ -6,6 +6,10 @@
   "author": {"name": "Christopher Hoskin"},
   "version": "1.0.0",
   "properties": {
+    "databasePassword": {
+      "description": "Password for the database user",
+      "default": ""
+    }
   },
   "exports": {
   },
