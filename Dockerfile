@@ -14,9 +14,12 @@ RUN apt-get update && apt-get install -y php7.0 php7.0-xsl php7.0-pgsql php7.0-l
 # mv comanage-registry-${comanage_version} /srv/comanage && \
 # rm ${comanage_version}.tar.gz
 
-ADD comanage-inputs.json comanage-inputs.json
+ADD net.cshoskin.comanage-inputs.json net.cshoskin.comanage-inputs.json
+ADD app-entrypoint.sh app-entrypoint.sh
+RUN chmod a+x /app-entrypoint.sh
 ADD nami nami
-RUN nami install ./nami/
+#Unpack when we build, as we want to initialize when the package is run
+RUN nami unpack ./nami/
 RUN ln -s /opt/bitnami/net.cshoskin.comanage /srv/comanage
 
 RUN ln -s /srv/comanage/app/webroot /var/www/html/registry
@@ -46,5 +49,9 @@ RUN mv /etc/shibboleth/shibboleth2.xml /etc/comanage/
 RUN ln -s /etc/comanage/shibboleth2.xml /etc/shibboleth/shibboleth2.xml
 
 EXPOSE 80
-CMD /srv/comanage/local/start.sh
+
+#ENV DB_PASSWORD="comanage"
+
+ENTRYPOINT ["/app-entrypoint.sh"]
+CMD ["nami","start"]
 
