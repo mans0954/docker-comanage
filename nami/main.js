@@ -20,6 +20,7 @@ $app.preUnpackFiles = function() {
 $app.postInstallation = function() {
   $app.info('Running post installation');
   $app.trace(`I'm useful for creating databases, changing passwords...`);
+  $app.helpers.configureDatabase($app.databasePassword);
 };
 
 // UNINSTALLATION HOOKS: These are methods that will be executed during the uninstallation of the application, in order
