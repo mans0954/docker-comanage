@@ -27,7 +27,7 @@ class DATABASE_CONFIG {
 	);
 	function __construct() {
 		$this->default = yaml_parse_file('/etc/comanage/database.yaml');
-                $this->default['password'] = SUB_PASSWORD
+                $this->default['password'] = 'SUB_PASSWORD';
 	}
 }
 ?>

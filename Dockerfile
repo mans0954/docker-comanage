@@ -23,10 +23,13 @@ RUN nami unpack ./nami/
 RUN ln -s /opt/bitnami/net.cshoskin.comanage /srv/comanage
 
 RUN ln -s /srv/comanage/app/webroot /var/www/html/registry
-ADD comanage.conf /etc/apache2/sites-available/
+ADD comanage80.conf /etc/apache2/sites-available/
+ADD comanage443.conf /etc/apache2/sites-available/
 RUN a2dissite 000-default
-RUN a2ensite comanage
+RUN a2ensite comanage80
+RUN a2ensite comanage443
 RUN a2enmod rewrite
+RUN a2enmod ssl
 RUN a2enmod shib2
 
 #
@@ -49,6 +52,7 @@ RUN mv /etc/shibboleth/shibboleth2.xml /etc/comanage/
 RUN ln -s /etc/comanage/shibboleth2.xml /etc/shibboleth/shibboleth2.xml
 
 EXPOSE 80
+EXPOSE 443
 
 #ENV DB_PASSWORD="comanage"
 
