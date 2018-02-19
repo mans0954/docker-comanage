@@ -70,5 +70,18 @@ In order to complete this demo environment in the minimum time possible, a numbe
 * Not using a service principal for communication between the IdP and the KDC
 * Using cookieProps="http" rather than cookieProps="https"
 
+# nami variant
+
+The nami branch is using nami to manage comanage within the container
+
+```
+git submodules init
+git submodules update
+cd nami/files
+git checkout <comanage tag>
+```
+
+See https://github.com/bitnami/nami/blob/master/docs/Nami.md for more information about nami
+
 
 
