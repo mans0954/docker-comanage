@@ -21,7 +21,7 @@ services:
       - example
 
   postgres:
-    image: postgres
+    image: postgres:10.1
     container_name: comanage-postgres
     domainname: docker
     environment:

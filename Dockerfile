@@ -1,4 +1,4 @@
-FROM debian
+FROM debian:9
 
 #RUN sed -i 's/deb.debian.org/mirror.ox.ac.uk/' /etc/apt/sources.list
 
