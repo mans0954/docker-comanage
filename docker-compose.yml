@@ -10,7 +10,7 @@ services:
       - ./data:/data
       - ./conf:/etc/comanage
     environment:
-      - DB_PASSWORD
+      - DB_PASSWORD=comanage
       - DB_HOST=postgres
       - DB_USER=comanage
       - DB_NAME=comanage
