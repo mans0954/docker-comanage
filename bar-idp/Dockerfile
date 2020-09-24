@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y wget unzip
 # Original Maintainer Mark McCahill "mark.mccahill@duke.edu"
 
 USER root
+ENV version=3.3.1
 
 RUN cd /opt
 
@@ -19,28 +20,28 @@ RUN cd /opt
 RUN set -e ; \
     mkdir /usr/local/dist ; \
     cd /usr/local/dist ; \
-    wget http://shibboleth.net/downloads/identity-provider/3.3.1/shibboleth-identity-provider-3.3.1.tar.gz ; \
-    wget http://shibboleth.net/downloads/identity-provider/3.3.1/shibboleth-identity-provider-3.3.1.tar.gz.asc ; \
-    wget http://shibboleth.net/downloads/identity-provider/3.3.1/shibboleth-identity-provider-3.3.1.tar.gz.sha256 ; \
+    wget http://shibboleth.net/downloads/identity-provider/archive/${version}/shibboleth-identity-provider-${version}.tar.gz ; \
+    wget http://shibboleth.net/downloads/identity-provider/archive/${version}/shibboleth-identity-provider-${version}.tar.gz.asc ; \
+    wget http://shibboleth.net/downloads/identity-provider/archive/${version}/shibboleth-identity-provider-${version}.tar.gz.sha256 ; \
     wget https://shibboleth.net/downloads/PGP_KEYS ; \
     gpg --import PGP_KEYS ; \
-    sha256sum --check shibboleth-identity-provider-3.3.1.tar.gz.sha256 ; \
-    gpg shibboleth-identity-provider-3.3.1.tar.gz.asc ; \
-    tar -xvzf shibboleth-identity-provider-3.3.1.tar.gz
+    sha256sum --check shibboleth-identity-provider-${version}.tar.gz.sha256 ; \
+    gpg shibboleth-identity-provider-${version}.tar.gz.asc ; \
+    tar -xvzf shibboleth-identity-provider-${version}.tar.gz
 
 ADD ./configs /build-configs
 
 #
 # Install shibboleth IDP
 #
-RUN export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64 ; \
+RUN export JAVA_HOME=/usr/local/openjdk-11/ ; \
     export KEYPASS=changeit ; \
     export SEALPASS=changeit ; \
     export SCOPE=bar.ac.uk ; \
     export HOST=bar-idp.$SCOPE ; \
     export ENTITYID=http://$HOST:8080/idp/shibboleth ;  \
     cd /usr/local/dist ;  \
-    export DIST=/usr/local/dist/shibboleth-identity-provider-3.3.1 ; \
+    export DIST=/usr/local/dist/shibboleth-identity-provider-${version} ; \
     export IDP_HOME=/opt/shibboleth-idp ; \
     echo \# Properties controlling the installation of the Shibboleth IdP>$DIST/idp.install.properties ; \
     export SFILE=$DIST/idp.merge.properties ; \
