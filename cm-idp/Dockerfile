@@ -6,7 +6,7 @@ MAINTAINER Christopher Hoskin "christopher.hoskin@gmail.com"
 # Original Maintainer Mark McCahill "mark.mccahill@duke.edu"
 
 USER root
-ENV version=3.3.1
+ENV version=3.3.3
 
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y wget unzip

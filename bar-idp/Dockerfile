@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y wget unzip
 # Original Maintainer Mark McCahill "mark.mccahill@duke.edu"
 
 USER root
-ENV version=3.3.1
+ENV version=3.3.3
 
 RUN cd /opt
 
